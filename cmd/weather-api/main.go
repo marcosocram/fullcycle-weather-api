@@ -1,6 +1,7 @@
 package main
 
 import (
+	"crypto/tls"
 	"log"
 	"net/http"
 	"os"
@@ -11,6 +12,8 @@ import (
 )
 
 func main() {
+	// Desabilitar a verificação do certificado SSL
+	http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
 	r := mux.NewRouter()
 	r.HandleFunc("/weather", app.GetWeatherHandler).Methods("GET")
 
